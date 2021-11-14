@@ -2,7 +2,7 @@ import os
 import json
 from zipfile import *
 
-dir_src = os.path.dirname(os.path.realpath(__file__))    # dir of this script
+dir_src = os.path.join((os.path.dirname(os.path.realpath(__file__))), "raw")    # dir of this script
 dir_dst = os.path.abspath(dir_src + '/..')
 
 # print(f"dir_src={dir_src}")
