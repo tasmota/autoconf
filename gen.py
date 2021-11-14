@@ -8,6 +8,7 @@ zips = defaultdict(list)
 
 for board_dir, _, files in os.walk(RAW_DIR):
     if files:
+        files = [f for f in files if not f.startswith('.')]
         a, _, arch, board = board_dir.split('/')
         os.makedirs(arch, exist_ok=True)
         print(f"Compressing {board} for {arch}")
