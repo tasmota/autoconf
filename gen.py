@@ -7,8 +7,7 @@ RAW_DIR = './raw'
 zips = defaultdict(list)
 
 for board_dir, _, files in os.walk(RAW_DIR):
-    if files:
-        files = [f for f in files if not f.startswith('.')]
+    if files := [f for f in files if not f.startswith('.')]:
         a, _, arch, board = board_dir.split('/')
         os.makedirs(arch, exist_ok=True)
         print(f"Compressing {board} for {arch}")
@@ -24,4 +23,4 @@ for board_dir, _, files in os.walk(RAW_DIR):
 
 for arch, zips_list in zips.items():
     with open(f"{arch}_manifest.json", 'w') as manifest:
-        json.dump({"zips": zips_list}, manifest, indent=None, separators=(',', ':'))
+        json.dump({"zip": zips_list}, manifest, indent=None, separators=(',', ':'))
