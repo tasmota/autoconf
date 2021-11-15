@@ -15,7 +15,7 @@ If your device is not connected to the Internet, you can still download autoconf
 
 At boot, the Tasmota engine checks of an autoconf file is present in the file system and applies it.
 
-An autoconf file is a ZIP file which contains scripts and configuration sub-files. To be detected, an autoconf file must end with `_autoconf.zip`.
+An autoconf file is a ZIP file which contains scripts and configuration sub-files. To be detected, an autoconf file must end with `.autoconf`.
 
 Note: only one autoconf file is allowed. If multiple files are present, none is applied and an error is returned.
 
