@@ -23,4 +23,4 @@ for board_dir, _, files in os.walk(RAW_DIR):
 
 for arch, zips_list in zips.items():
     with open(f"{arch}_manifest.json", 'w') as manifest:
-        json.dump({"zip": zips_list}, manifest, indent=None, separators=(',', ':'))
+        json.dump({"zip": sorted(zips_list)}, manifest, indent=None, separators=(',', ':'))
