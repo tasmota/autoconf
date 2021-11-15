@@ -1,0 +1,31 @@
+name: Build config zip
+
+on:
+  workflow_dispatch:  # Manually start a workflow
+  pull_request:
+    paths:
+      - 'raw/*'
+
+jobs:
+
+  genpy:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+    - name: Run gen.py
+      run: |
+        python gen.py
+    - name: Transfer the new config files into the repository
+      run: |
+        git config --local user.name "Platformio BUILD"
+        git config user.email github-actions@github.com
+        git add -f ./*
+        git commit -m ${GITHUB_SHA}
+    - name: Push the firmware files to branch firmware
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'main'
