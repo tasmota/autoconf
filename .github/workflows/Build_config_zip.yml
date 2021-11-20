@@ -2,7 +2,7 @@ name: Build config zip
 
 on:
   workflow_dispatch:  # Manually start a workflow
-  pull_request:
+  push:
     paths:
       - 'raw/**'
 
