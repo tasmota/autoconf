@@ -23,4 +23,4 @@ for board_dir, _, files in os.walk(RAW_DIR):
 
 for arch, packages_list in packages.items():
     with open(f"{arch}_manifest.json", "w") as manifest:
-        json.dump({"files": sorted(packages_list)}, manifest, indent=None, separators=(",", ":"))
+        json.dump({"files": sorted(packages_list, key=str.casefold)}, manifest, indent=None, separators=(",", ":"))
