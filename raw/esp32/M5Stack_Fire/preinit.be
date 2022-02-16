@@ -3,7 +3,7 @@
 import sys
 var path = sys.path()
 
-path.push(wd)
+path.push(tasmota.wd)
 import lv_touch_3_buttons
 path.pop()
 
