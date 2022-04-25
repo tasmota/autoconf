@@ -31,6 +31,8 @@ class CHSC6540 : I2C_Driver
     if self.tp_int < 0
       tasmota.log("I2C: can't start CHSC6540 without INTERRUPT-1 gpio configured", 3)
       self.wire = nil
+    else
+      gpio.pin_mode(self.tp_int, gpio.INPUT_PULLUP)
     end
 
     # all good, configure device
