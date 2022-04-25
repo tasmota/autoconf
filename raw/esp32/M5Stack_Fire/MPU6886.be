@@ -139,6 +139,4 @@ class MPU6886 : I2C_Driver
 
 end
 
-# mpu_accel = MPU6886()
-
-return MPU6886
+return MPU6886()
