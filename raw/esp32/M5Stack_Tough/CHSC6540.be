@@ -73,5 +73,5 @@ class CHSC6540 : I2C_Driver
 
 end
 
-chsc6540_ts = CHSC6540()
+var chsc6540_ts = CHSC6540()
 return chsc6540_ts
