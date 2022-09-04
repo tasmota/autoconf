@@ -37,7 +37,7 @@ widg_line = lv.label(scr)
 widg_line.set_long_mode(lv.LABEL_LONG_SCROLL)                                        # auto scrolling if text does not fit
 widg_line.set_pos(1,20)
 widg_line.set_width(hres)
-widg_line.set_align(lv.TEXT_ALIGN_RIGHT)  
+widg_line.set_align(lv.TEXT_ALIGN_LEFT)  
 widg_line.refr_size()                                                                # new in LVGL8
 widg_line.refr_pos()                                                                 # new in LVGL8
 
