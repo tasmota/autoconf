@@ -2,4 +2,5 @@ Template {"NAME":"Lilygo S3 Display","GPIO":[32,1,1,0,4864,1,1,1,1,1,1,1,1,1,33,
 Module 0
 SetOption73 1
 AdcParam1 6,0,4095,0,6600
+DisplayDimmer 40
 
