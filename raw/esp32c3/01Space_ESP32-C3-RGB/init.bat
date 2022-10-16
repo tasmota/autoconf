@@ -1,2 +1,3 @@
 Template {"NAME":"01Space_ESP32-C3-RGB","GPIO":[640,608,1,1,1,1,1,1,1376,32,544,0,0,0,0,0,0,0,1,1,1,1],"FLAG":0,"BASE":1}
 Module 0
+Pixels 25
