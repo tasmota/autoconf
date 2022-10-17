@@ -1,0 +1,11 @@
+{"page":1,"comment":"---------- Upper stat line ----------"}
+{"id":0,"bg_color":"#000000","text_color":"#FFFFFF"}
+
+{"id":10,"obj":"img","x":-25,"y":-25,"image_recolor":"#FFFFFF","image_recolor_opa":255}
+{"id":11,"obj":"lv_clock","x":17,"y":3,"w":55,"h":16,"radius":0,"border_side":0,"text_font":"seg7-10"}
+{"id":12,"obj":"lv_wifi_arcs","x":50,"y":0,"w":20,"h":16,"radius":0,"border_side":0,"bg_color":"#000000","line_color":"#FFFFFF"}
+
+{"id":20,"obj":"label","x":0,"y":20,"w":72,"h":16,"radius":0,"border_side":0,"text":"--","text_font":"unscii-8"}
+
+{"comment":"--- set name of device ---","berry_run":"p1b20.text = tasmota.cmd('DeviceName')['DeviceName']"}
+{"comment":"--- set tasmota logo ---","berry_run":"p1b10._lv_obj.set_tasmota_logo() p1b10._lv_obj.set_zoom(64)"}
