@@ -1,8 +1,6 @@
 # autoconf
 Tasmota autoconf device configurations storage
 
-Important: `autoconf` is not enabled by default and requires to compile with `#define USE_AUTOCONF`, which requires Berry language and HTTPS support.
-
 ## Why autoconf?
 
 ESP32 based devices get more sophisticated than ESP8266 and require increased post-configuration by users.
