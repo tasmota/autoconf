@@ -1,4 +1,4 @@
-Template {"NAME":"Wemos Teleinfo","GPIO":[1,1,1,1,1,1,1,1376,1,1,1,5632,1,1,1,1,1,1,1,5632,1,1,640,1,608,1,0,1,1,1,1,1,1,1,1,1],"FLAG":0,"BASE":1}
+Template {"NAME":"Wemos Teleinfo","GPIO":[1,1,1,1,1,1,1,1376,1,1,1,5632,1,1,1,1,1,1,1,1,1,1,640,1,608,1,0,1,1,1,1,1,1,1,1,1],"FLAG":0,"BASE":1}
 Module 0
 
 ; All these parameters are saved onto flash device
