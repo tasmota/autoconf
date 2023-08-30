@@ -25,21 +25,15 @@ class AXP202_LilyGo_TWatch_2020V1 : AXP202
       # power->setLDO2Voltage(3300);
       self.set_ldo_voltage(2, 3300)
 
-      # // New features of Twatch V3
-      # power->limitingOff();
-      self.set_limiting_off()
+      # Audio power domain is AXP202 LDO3 on V1
+      #  power->setLDO3Mode(1);
+      #  power->setPowerOutPut(AXP202_LDO3, en);
+      self.write_bit(0x29, 7, true)
+      self.set_ldo_enable(3, true)
 
-      # //Audio power domain is AXP202 LDO4
+      # // No use on V1
       # power->setPowerOutPut(AXP202_LDO4, false);
       self.set_ldo_enable(4, false)
-      # power->setLDO4Voltage(AXP202_LDO4_3300MV);
-      self.set_ldo_voltage(4, 3300)
-      # power->setPowerOutPut(AXP202_LDO4, true);
-      self.set_ldo_enable(4, true)
-
-      # // No use
-      # power->setPowerOutPut(AXP202_LDO3, false);
-      self.set_ldo_enable(3, false)
 
       tasmota.add_driver(self)
     end
@@ -47,7 +41,7 @@ class AXP202_LilyGo_TWatch_2020V1 : AXP202
   
   # enable power to audio chip
   def audio_enable(en)
-    self.set_ldo_enable(4, en)
+    self.set_ldo_enable(3, en)
   end
 
   # set power to backlight, dimming is controlled via PWM on GPIO15
