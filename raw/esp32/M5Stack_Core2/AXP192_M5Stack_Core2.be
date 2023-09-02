@@ -73,7 +73,7 @@ class AXP192_M5Stack_Core2 : AXP192
       tasmota.delay(100)   # wait for 100ms
 
       # bus power mode_output
-      self.set_buf_power_mode(false)
+      self.set_buf_power_mode(true)
 
       tasmota.add_driver(self)
     end
