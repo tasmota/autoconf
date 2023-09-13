@@ -1,7 +1,7 @@
 import path
 
 # make sure bootloader.bin is in the file-system
-if !path.exists("bootloder.bin")
+if !path.exists("bootloader.bin")
   try
     var f_in = open(tasmota.wd + "bootloader.bin")
     var f_content = f_in.readbytes()
