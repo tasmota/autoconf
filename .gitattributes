@@ -4,3 +4,4 @@
 # No changes for zip files
 *.zip binary
 *.autoconf binary
+*.bin binary
