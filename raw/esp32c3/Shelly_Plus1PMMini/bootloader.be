@@ -1,5 +1,5 @@
 #
-# Flash bootloader from URL
+# Flash bootloader from filesystem
 #
 
 class bootloader
@@ -21,30 +21,7 @@ class bootloader
     return nil
   end
 
-  #
-  # download from URL and store to `bootloader.bin`
-  #
-  def download(url)
-    # address to flash the bootloader
-    var addr = self.get_bootloader_address()
-    if addr == nil    raise "internal_error", "can't find address for bootloader" end
-
-    var cl = webclient()
-    cl.begin(url)
-    var r = cl.GET()
-    if r != 200    raise "network_error", "GET returned "+str(r) end
-    var bl_size = cl.get_size()
-    if bl_size <= 8291   raise "internal_error", "wrong bootloader size "+str(bl_size) end
-    if bl_size > (0x8000 - addr)  raise "internal_error", "bootloader is too large "+str(bl_size / 1024)+"kB" end
-
-    cl.write_file("bootloader.bin")
-    cl.close()
-  end
-
-  def flash(url)
-    if url != nil
-      self.download(url)
-    end
+  def flash()
     # address to flash the bootloader
     var addr = self.get_bootloader_address()
     if addr == nil    raise "internal_error", "can't find address for bootloader" end
@@ -59,7 +36,7 @@ class bootloader
     if bl_size <= 8291   raise "internal_error", "wrong bootloader size "+str(bl_size) end
     if bl_size > (0x8000 - addr)  raise "internal_error", "bootloader is too large "+str(bl_size / 1024)+"kB" end
 
-    print("OTA: Flashing bootloader")
+    print("Flashing bootloader")
     # from now on there is no turning back, any failure means a bricked device
     import flash
     # read current value for bytes 2/3
@@ -76,7 +53,7 @@ class bootloader
       buf = bl.readbytes(0x1000)            # read next chunk
     end
     bl.close()
-    print("OTA: Booloader flashed, please restart")
+    print("Booloader flashed, please restart")
 
   end
 end
@@ -84,9 +61,7 @@ end
 return bootloader
 
 #-
-
 ### FLASH
 import bootloader
-bootloader().flash('https://github.com/tasmota/autoconf/raw/main/raw/esp32c3/Shelly_Plus1PMMini/bootloader.bin')
-
+bootloader().flash()
 -#
