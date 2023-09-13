@@ -1,2 +1,0 @@
-import bootloader
-bootloader().flash()
