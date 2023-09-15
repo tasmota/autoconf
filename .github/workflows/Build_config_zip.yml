@@ -22,8 +22,8 @@ jobs:
         python gen.py
     - name: Transfer the new config files into the repository
       run: |
-        git config --local user.name "Github BUILD"
-        git config user.email github-actions@github.com
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config user.name "github-actions[bot]"
         git add -f ./*
         git commit -m ${GITHUB_SHA}
     - name: Push the firmware files to branch firmware
