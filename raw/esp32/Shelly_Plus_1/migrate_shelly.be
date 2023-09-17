@@ -29,7 +29,7 @@ path.remove("index.html.gz")
 
 # copy some files from autoconf to filesystem
 var ok
-ok = cp("bootloader-tasmota-c3.bin")
+ok = cp("bootloader-tasmota-32.bin")
 ok = cp("Partition_Wizard.tapp")
 
 # use an alternative to partition_core that can read Shelly's otadata
@@ -45,10 +45,10 @@ load(tasmota.wd + "bootloader.be")
 if ok
   # do some basic check that the bootloader is not already in place
   import flash
-  if flash.read(0x1000, 4) == bytes('CD3F6395')
+  if flash.read(0x2000, 4) == bytes('0030B320')
     tasmota.log("OTA: bootloader already in place, not flashing it")
   else
-    ok = global.bootloader().flash("bootloader-tasmota-c3.bin")
+    ok = global.bootloader().flash("bootloader-tasmota-32.bin")
   end
   if ok
     var p = global.partition_core_shelly.Partition()
