@@ -1,2 +1,2 @@
 # load Winky teleinfo driver
-load("teleinfo.be")
+#load("teleinfo.be")
