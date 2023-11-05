@@ -7,18 +7,12 @@ class TELEINFO: Driver
   var strip
   var bri
   var is_usb
-  var deepsleep
+  var tick_500ms
 
   def init()
-    import json
     # First we need to get Analog voltage 
-    var sensors=json.load(tasmota.read_sensors())
-    self.on_a1(sensors['ANALOG']['A1'] )
-    self.on_a2(sensors['ANALOG']['A2'] )
-
-    # Get current value of deepsleep
-    var ds = tasmota.cmd("DeepSleepTime")
-    self.deepsleep = ds['DeepSleepTime']
+    self.tick_500ms = false
+    self.every_500ms()
 
     # Get LED Brightness from UI
     var led = light.get()
@@ -41,9 +35,6 @@ class TELEINFO: Driver
     tasmota.add_rule("System#Init", /value -> self.set_led(0xFFFF00))
     tasmota.add_rule("Wifi#Connected", /value -> self.set_led(0x00FFFF))
     tasmota.add_rule("Mqtt#Connected", /value -> self.set_led(0x00FF00))
-
-    tasmota.add_rule("ANALOG#A1", /value -> self.on_a1(value) )
-    tasmota.add_rule("ANALOG#A2", /value -> self.on_a2(value) )
     tasmota.add_rule("Tele#Energy#Power", /value -> self.done(value) )
 
   end
@@ -55,40 +46,40 @@ class TELEINFO: Driver
   end
 
   def set_deepsleep(s)
-    # avoid same write il value is eq
-    if self.deepsleep != s
-      self.deepsleep = s
-      var cmd = "deepsleeptime " + str(s)
-      print(cmd)
-      tasmota.cmd(cmd)
-    end
+    #import json
+    #var sensors=json.load(tasmota.read_sensors())
+    #self.on_a1(sensors['ANALOG']['A1'] )
+    #self.on_a2(sensors['ANALOG']['A2'] )
+    var cmd = "deepsleeptime " + str(s)
+    print ("set_deepsleep() ", cmd)
+    tasmota.cmd(cmd)
   end
 
   def sleep() 
-    var ds = 0
+    self.strip.set_pixel_color(1, 0x000000, self.bri)
+    self.strip.set_pixel_color(0, 0x000000, self.bri)
+    self.strip.show()
+    print ("sleep()")
     if self.is_usb == false
       # DEBUG 
       print("All Done, going to sleep")
-      self.strip.set_pixel_color(1, 0x000000, self.bri)
-      self.strip.set_pixel_color(0, 0x000000, self.bri)
-      self.strip.show()
       if gpio.digital_read(8) != 0
-        # Sleep for 1 min
-        ds = 60 
+        # Sleep for 15s
+        self.set_deepsleep(15)
       else
         print("Button prevented sleep")
       end
     else
       print("USB Connected no sleep")
     end
-    self.set_deepsleep(ds)
   end
 
   def done(value) 
+    print("Done")
     self.strip.set_pixel_color(1, 0x000000, self.bri)
-    self.strip.set_pixel_color(0, 0x00FF00, self.bri)
+    self.strip.set_pixel_color(0, 0xFF00FF, self.bri)
     self.strip.show()
-    tasmota.set_timer(500, /value -> self.sleep())
+    tasmota.set_timer(250, /value -> self.sleep())
   end
 
   def set_led(color) 
@@ -97,22 +88,29 @@ class TELEINFO: Driver
     self.strip.show()
   end
 
-  def on_a1(value) 
-    self.vusb = self.analog2voltage(value)
+  def every_500ms()
+    import json
+    import string
+    # get Analog voltage 
+    var sensors=json.load(tasmota.read_sensors())
+    self.vcap = self.analog2voltage(sensors['ANALOG']['A2'])
+    self.vusb = self.analog2voltage(sensors['ANALOG']['A1'])
     if self.vusb > 4.5
       self.is_usb = true 
-      # Remove deepsleep
-      self.set_deepsleep(0)
     else
       self.is_usb = false
     end
-  end
-
-  def on_a2(value) 
-    import string
-    self.vcap = self.analog2voltage(value)
     # DEBUG 
     print(string.format("SuperCap:%.2fV  USB:%.2fV  USB:%d", self.vcap, self.vusb, self.is_usb))
+  end
+
+  def every_250ms()
+    if self.tick_500ms == true
+      self.tick_500ms = false
+      self.every_500ms()
+    else
+      self.tick_500ms = true
+    end
   end
   
   def every_second()
@@ -134,12 +132,14 @@ class TELEINFO: Driver
   #- add sensor value to teleperiod -#
   # Looks like this one prevents "Tele#Sensor#......" 
   # to be triggered so leave it as comment for now
-#  def json_append()
-#    import string
-#    var Msg = string.format(',"vsub":%.1f, "vcap":%.1f }', self.vusb, self.vcap)
-#    tasmota.response_append(Msg)
-#    self.trigger_done()
-#  end
+  def json_append()
+    if !self.vusb return nil end 
+    if !self.vcap return nil end 
+    import string
+    var msg = string.format(',"vsub":%i, "vcap":%i }', int(self.vusb*1000), int(self.vcap*1000))
+#    print(msg)
+#    tasmota.response_append(msg)
+  end
 
 end
 

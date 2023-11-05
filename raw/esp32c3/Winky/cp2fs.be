@@ -28,9 +28,7 @@ import path
 
 # copy some samples files from autoconf 
 # to filesystem for end user speed up learn
-var ok
-ok = cp("autoexec.be")
-ok = cp("teleinfo.be")
-
+cp("_autoexec.be", "autoexec.be")
+cp("_teleinfo.be", "teleinfo.be")
 
 # Done

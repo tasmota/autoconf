@@ -10,8 +10,8 @@ Module 0
 ; Disable Boot Loop Detection
 SetOption65 1
 
-; Set Telemetry to 10s (deepsleep)
-TelePeriod 10
+; Set Telemetry to 11s (to remove 10s deepsleep)
+TelePeriod 11
 
 ; # Set auto timezone
 Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
