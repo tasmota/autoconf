@@ -59,7 +59,7 @@ class TELEINFO: Driver
     if self.is_usb == false
       # DEBUG 
       print("All Done, going to sleep")
-      if gpio.digital_read(8) != 0
+      if gpio.digital_read(9) != 0
         # Sleep for 15s
         self.set_deepsleep(15)
       else
