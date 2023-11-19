@@ -22,7 +22,7 @@ class TELEINFO: Driver
     self.strip = Leds(2, 2, gpio.pin(gpio.WS2812, 1))
 
     # Check Super Capacitor Voltage
-    if self.vcap < 4.5
+    if self.vcap < 3.8
       # Not enough we should go to deepsleep from here
       self.strip.set_pixel_color(0, 0xFF0000, self.bri)
       self.sleep()
