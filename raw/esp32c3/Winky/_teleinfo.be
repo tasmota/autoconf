@@ -22,7 +22,7 @@ class TELEINFO: Driver
     self.strip = Leds(2, 2, gpio.pin(gpio.WS2812, 1))
 
     # Check Super Capacitor Voltage
-    if self.vcap < 4.5
+    if self.vcap < 3.8
       # Not enough we should go to deepsleep from here
       self.strip.set_pixel_color(0, 0xFF0000, self.bri)
       self.sleep()
@@ -46,10 +46,6 @@ class TELEINFO: Driver
   end
 
   def set_deepsleep(s)
-    #import json
-    #var sensors=json.load(tasmota.read_sensors())
-    #self.on_a1(sensors['ANALOG']['A1'] )
-    #self.on_a2(sensors['ANALOG']['A2'] )
     var cmd = "deepsleeptime " + str(s)
     print ("set_deepsleep() ", cmd)
     tasmota.cmd(cmd)
@@ -63,7 +59,7 @@ class TELEINFO: Driver
     if self.is_usb == false
       # DEBUG 
       print("All Done, going to sleep")
-      if gpio.digital_read(8) != 0
+      if gpio.digital_read(9) != 0
         # Sleep for 15s
         self.set_deepsleep(15)
       else
@@ -92,7 +88,11 @@ class TELEINFO: Driver
     import json
     import string
     # get Analog voltage 
-    var sensors=json.load(tasmota.read_sensors())
+    # using in one line at boot fired error on nil value
+    # splitted in 2 lines read and load resolved the issue
+    # var sensors=json.load(tasmota.read_sensors())
+    var sensors=tasmota.read_sensors()
+    sensors=json.load(sensors)
     self.vcap = self.analog2voltage(sensors['ANALOG']['A2'])
     self.vusb = self.analog2voltage(sensors['ANALOG']['A1'])
     if self.vusb > 4.5
@@ -101,7 +101,7 @@ class TELEINFO: Driver
       self.is_usb = false
     end
     # DEBUG 
-    print(string.format("SuperCap:%.2fV  USB:%.2fV  USB:%d", self.vcap, self.vusb, self.is_usb))
+    print(string.format("SCap:%.2fV  USB:%.2fV  USB:%d", self.vcap, self.vusb, self.is_usb))
   end
 
   def every_250ms()

@@ -4,6 +4,7 @@
 class TELEINFO: Driver
   var vusb
   var vcap
+  var vlky
   var strip
   var bri
   var is_usb
@@ -22,7 +23,7 @@ class TELEINFO: Driver
     self.strip = Leds(2, 2, gpio.pin(gpio.WS2812, 1))
 
     # Check Super Capacitor Voltage
-    if self.vcap < 4.5
+    if self.vcap < 3.8
       # Not enough we should go to deepsleep from here
       self.strip.set_pixel_color(0, 0xFF0000, self.bri)
       self.sleep()
@@ -41,15 +42,10 @@ class TELEINFO: Driver
 
   def analog2voltage(v) 
     v = int(v)
-    # Voltage is divided by 2 by a resistor R/R divider
-    return 3.3 * 2.0 * v / 4095
+    return 3.3 * v / 4095
   end
 
   def set_deepsleep(s)
-    #import json
-    #var sensors=json.load(tasmota.read_sensors())
-    #self.on_a1(sensors['ANALOG']['A1'] )
-    #self.on_a2(sensors['ANALOG']['A2'] )
     var cmd = "deepsleeptime " + str(s)
     print ("set_deepsleep() ", cmd)
     tasmota.cmd(cmd)
@@ -63,7 +59,7 @@ class TELEINFO: Driver
     if self.is_usb == false
       # DEBUG 
       print("All Done, going to sleep")
-      if gpio.digital_read(23) != 0
+      if gpio.digital_read(9) != 0
         # Sleep for 15s
         self.set_deepsleep(15)
       else
@@ -91,17 +87,23 @@ class TELEINFO: Driver
   def every_500ms()
     import json
     import string
-    # get Analog voltage 
-    var sensors=json.load(tasmota.read_sensors())
-    self.vcap = self.analog2voltage(sensors['ANALOG']['A2'])
-    self.vusb = self.analog2voltage(sensors['ANALOG']['A1'])
+    # using in one line at boot fired error on nil value
+    # splitted in 2 lines read and load resolved the issue
+    # var sensors=json.load(tasmota.read_sensors())
+    var sensors=tasmota.read_sensors()
+    sensors=json.load(sensors)
+    # Voltage is divided by 2 by a resistor R/R divider
+    self.vcap = self.analog2voltage(sensors['ANALOG']['A2']) * 2
+    self.vusb = self.analog2voltage(sensors['ANALOG']['A1']) * 2
+    # Voltage is divided by 5.7 by a resistor R/R divider
+    self.vlky = self.analog2voltage(sensors['ANALOG']['A3']) * 5.7
     if self.vusb > 4.5
       self.is_usb = true 
     else
       self.is_usb = false
     end
     # DEBUG 
-    print(string.format("SuperCap:%.2fV  USB:%.2fV  USB:%d", self.vcap, self.vusb, self.is_usb))
+    print(string.format("Linky:%.2fV  SCap:%.2fV  USB:%.2fV  USB:%d", self.vlky, self.vcap, self.vusb, self.is_usb))
   end
 
   def every_250ms()
@@ -121,9 +123,10 @@ class TELEINFO: Driver
   def web_sensor()
     import string
     var msg = string.format(
-            "{s}USB{m}%.1f V{e}"
-            "{s}Super Capacitor{m}%.1f V{e}",
-             self.vusb, self.vcap )
+            "{s}Linky{m}%.2f V{e}"
+            "{s}USB{m}%.2f V{e}"
+            "{s}Super Capacitor{m}%.2f V{e}",
+             self.vlky, self.vusb, self.vcap )
 
     tasmota.web_send_decimal(msg)
   end
@@ -135,6 +138,7 @@ class TELEINFO: Driver
   def json_append()
     if !self.vusb return nil end 
     if !self.vcap return nil end 
+    if !self.vlky return nil end 
     import string
     var msg = string.format(',"vsub":%i, "vcap":%i }', int(self.vusb*1000), int(self.vcap*1000))
 #    print(msg)
