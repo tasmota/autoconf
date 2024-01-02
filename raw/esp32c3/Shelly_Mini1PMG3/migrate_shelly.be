@@ -10,13 +10,11 @@ def cp(from, to)
       # tasmota.log("f_in="+tasmota.wd + from)
       var f_in = open(tasmota.wd + from)
       var f_out = open(to, "w")
-
       var f_content = f_in.readbytes(0x2000)  # read by chunks of 8kb
       while size(f_content) > 0
         f_out.write(f_content)
         f_content = f_in.readbytes(0x2000)    # read next chunk
       end
-
       f_in.close()
       f_out.close()
     except .. as e,m
