@@ -26,26 +26,6 @@ def cp(from, to)
   return true
 end
 
-def copy_ota(from_addr, to_addr, sz)
-  import flash
-  import string
-  var size_left = sz
-  var offset = 0
-
-  tasmota.log(string.format("UPL: Copy flash from 0x%06X to 0x%06X (size: %ikB)", from_addr, to_addr, sz / 1024), 2)
-  while size_left > 0
-    var b = flash.read(from_addr + offset, 4096)
-    flash.erase(to_addr + offset, 4096)
-    flash.write(to_addr + offset, b, true)
-    size_left -= 4096
-    offset += 4096
-    if ((offset-4096) / 102400) < (offset / 102400)
-      tasmota.log(string.format("UPL: Progress %ikB", offset/1024), 3)
-    end
-  end
-  tasmota.log("UPL: done", 2)
-end
-
 # make some room if there are some leftovers from shelly
 import path
 path.remove("index.html.gz")
@@ -74,11 +54,6 @@ if ok
     ok = global.bootloader().flash("bootloader-tasmota-32.bin")
   end
   if ok
-    var p = global.partition_core_shelly.Partition()
-    var app0 = p.get_ota_slot(0)
-    var app1 = p.get_ota_slot(1)
-    var app0_size = app0.get_image_size()
-    var app1_size = app1.get_image_size()
     # check if we get some Tasmota signature in slot 1
     if   (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
       p.set_active(1)
