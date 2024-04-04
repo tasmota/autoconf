@@ -26,7 +26,7 @@ def cp(from, to)
   return true
 end
 
-static def copy_ota(from_addr, to_addr, sz)
+def copy_ota(from_addr, to_addr, sz)
   import flash
   import string
   var size_left = sz
@@ -80,10 +80,10 @@ if ok
     var app0_size = app0.get_image_size()
     var app1_size = app1.get_image_size()
     if (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
-      self.copy_ota(app1.start, app0.start, app1_size)
+      copy_ota(app1.start, app0.start, app1_size)
     end
     if (flash.read(p.get_ota_slot(0).start + 16, 4) == bytes("00FFFF00"))
-      self.copy_ota(app0.start, app1.start, app0_size)
+      copy_ota(app0.start, app1.start, app0_size)
     end
     var otadata_offset = p.otadata.offset
     flash.erase(otadata_offset, 0x2000)
