@@ -54,6 +54,7 @@ if ok
     ok = global.bootloader().flash("bootloader-tasmota-32.bin")
   end
   if ok
+    var p = global.partition_core_shelly.Partition()
     # check if we get some Tasmota signature in slot 1
     if   (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
       p.set_active(1)
