@@ -26,6 +26,26 @@ def cp(from, to)
   return true
 end
 
+def copy_ota(from_addr, to_addr, sz)
+  import flash
+  import string
+  var size_left = sz
+  var offset = 0
+
+  tasmota.log(string.format("UPL: Copy flash from 0x%06X to 0x%06X (size: %ikB)", from_addr, to_addr, sz / 1024), 2)
+  while size_left > 0
+    var b = flash.read(from_addr + offset, 4096)
+    flash.erase(to_addr + offset, 4096)
+    flash.write(to_addr + offset, b, true)
+    size_left -= 4096
+    offset += 4096
+    if ((offset-4096) / 102400) < (offset / 102400)
+      tasmota.log(string.format("UPL: Progress %ikB", offset/1024), 3)
+    end
+  end
+  tasmota.log("UPL: done", 2)
+end
+
 # make some room if there are some leftovers from shelly
 import path
 path.remove("index.html.gz")
@@ -55,7 +75,18 @@ if ok
   end
   if ok
     var p = global.partition_core_shelly.Partition()
-    p.save()      # save with otadata compatible with new bootloader
+    var app0 = p.get_ota_slot(0)
+    var app1 = p.get_ota_slot(1)
+    var app0_size = app0.get_image_size()
+    var app1_size = app1.get_image_size()
+    # check if we get some Tasmota signature in slot 1
+    if (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
+      copy_ota(app1.start, app0.start, app1_size)
+    elif (flash.read(p.get_ota_slot(0).start + 16, 4) == bytes("00FFFF00"))
+      copy_ota(app0.start, app1.start, app0_size)
+    end
+    var otadata_offset = p.otadata.offset
+    flash.erase(otadata_offset, 0x2000)
     tasmota.log("OTA: Shelly migration successful", 2)
   end
 end
