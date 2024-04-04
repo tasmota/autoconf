@@ -79,15 +79,12 @@ if ok
     var app1 = p.get_ota_slot(1)
     var app0_size = app0.get_image_size()
     var app1_size = app1.get_image_size()
-    if (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
-      copy_ota(app1.start, app0.start, app1_size)
+    # check if we get some Tasmota signature in slot 1
+    if   (flash.read(p.get_ota_slot(1).start + 16, 4) == bytes("00FFFF00"))
+      p.set_active(1)
+    elif (flash.read(p.get_ota_slot(0).start + 16, 4) == bytes("00FFFF00"))
+      p.set_active(0)
     end
-    if (flash.read(p.get_ota_slot(0).start + 16, 4) == bytes("00FFFF00"))
-      copy_ota(app0.start, app1.start, app0_size)
-    end
-    var otadata_offset = p.otadata.offset
-    flash.erase(otadata_offset, 0x2000)
-    p.set_active(1)
     tasmota.log("OTA: Shelly migration successful", 2)
   end
 end
