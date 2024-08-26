@@ -2,21 +2,23 @@ Template {"NAME":"Wemos Teleinfo","GPIO":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1376,1,1,6
 Module 0
 
 ; All these parameters are saved onto flash device
-; so once configured, it's better to leave them in
-; file init.bat
+; only once when autoconf is activated or 
+; when it's removed and activated again
 ; ===================================================
 
-; Set Teleinfo in legacy (historique) mode at 1200 baud.
-EnergyConfig Historique	
+; Disable Boot Loop Detection
+SetOption65 1
 
-; Set Teleinfo in standard mode at 9600 baud.
-; EnergyConfig Standard	
+; define OTA Url
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo.bin
 
-; Enable sending of all frames in raw mode
-EnergyConfig Full	
+; # Set auto timezone
+Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 
-; Send only each 1 on 10 frames received
-EnergyConfig Skip 9
+; # Set Teleinfo in legacy (historique) mode at 1200 baud.
+; EnergyConfig Historique	
 
+; # Set Teleinfo in stadard mode at 9600 baud.
+; EnergyConfig Standard
 
 
