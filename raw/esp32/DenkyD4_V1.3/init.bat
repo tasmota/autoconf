@@ -1,4 +1,4 @@
-Template {"NAME":"Denky D4 (v1.1)","GPIO":[32,0,0,0,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+Template {"NAME":"Denky D4 (v1.3)","GPIO":[32,0,0,0,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
 Module 0
 
 ; All these parameters are saved onto flash device

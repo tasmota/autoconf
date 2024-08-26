@@ -1,21 +1,22 @@
 Template {"NAME":"Denky D4 (v1.0)","GPIO":[32,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,640,608,0,0,450,449,448,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
 Module 0
-OtaUrl https://raw.githubusercontent.com/tasmota/install/main/firmware/unofficial/tasmota32-teleinfo.bin
 
 ; All these parameters are saved onto flash device
-; so once configured, it's better to leave them in
-; file init.bat
+; only once when autoconf is activated or 
+; when it's removed and activated again
 ; ===================================================
 
-; Set Teleinfo in legacy (historique) mode at 1200 baud.
-EnergyConfig Historique	
+; Disable Boot Loop Detection
+SetOption65 1
 
-; Set Teleinfo in standard mode at 9600 baud.
-; EnergyConfig Standard	
+; define OTA Url
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo-denkyd4.bin
 
-; Enable sending of all frames in raw mode
-EnergyConfig Full	
+; # Set auto timezone
+Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 
-; Send only each 1 on 10 frames received
-EnergyConfig Skip 9
+; # Set Teleinfo in legacy (historique) mode at 1200 baud.
+; EnergyConfig Historique	
 
+; # Set Teleinfo in stadard mode at 9600 baud.
+; EnergyConfig Standard
