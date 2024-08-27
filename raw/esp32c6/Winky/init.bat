@@ -10,6 +10,9 @@ Module 0
 ; Disable Boot Loop Detection
 SetOption65 1
 
+; Enable Wifi Scan (avoid wifi lost if router change channel)
+SetOption56 1
+
 ; Set Telemetry to 290s (300 special reserved by tasmota)
 TelePeriod 290
 
