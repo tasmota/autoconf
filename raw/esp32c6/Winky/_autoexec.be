@@ -12,18 +12,21 @@
 # Set Teleinfo in Standar mode at 9600 baud.
 #tasmota.cmd("EnergyConfig Standard")
 
-# Enable sending of all frames in raw mode
-#tasmota.cmd("EnergyConfig Full")
-
-# Send only each 1 on 10 frames received
-#tasmota.cmd("EnergyConfig Skip 9")
-
 # Disable Boot Loop Detection
 #tasmota.cmd("SetOption65 1")
 
-# Avoid conflict between native WS2812 and Berry control
-# disables native WS2812 (default Scheme is 0)
-#tasmota.cmd("Scheme 14")
+# Allow to display more Energy Values on WebUI
+#tasmota.cmd("WebSensor3 1")
+
+# Allow to display Winky Internal Voltages
+# Linky output, Super Capacitor and USB
+#tasmota.cmd("WebSensor2 1")
+
+# This driver is not used anymore since Winky is now provided with Nicolas's Firmware 
+# that does all the dirty job and have so much features, please check this out
+# https://github.com/NicolasBernaerts/tasmota/tree/master/teleinfo
+# Driver code has been let there for study and example purposes but been disabled
+# by commented following line
 
 # load Winky teleinfo driver
-load("teleinfo.be")
+#load("teleinfo.be")

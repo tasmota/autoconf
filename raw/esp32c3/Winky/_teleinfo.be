@@ -1,6 +1,10 @@
 # Winky Teleinfo Driver, this is just a sample file that read both
 # voltage (USB and Super Capacitor), display on Web UI
 
+# This driver is deprecated since Winky is now provided with Nicolas's Firmware 
+# that does all the dirty job and have so much features, please check this out
+# https://github.com/NicolasBernaerts/tasmota/tree/master/teleinfo
+
 class TELEINFO: Driver
   var vusb
   var vcap
@@ -143,6 +147,12 @@ class TELEINFO: Driver
 
 end
 
-teleinfo = TELEINFO()
-tasmota.add_driver(teleinfo)
+# This class is not used anymore since Winky is now provided with Nicolas's Firmware 
+# that does all the dirty job and have so much features, please check this out
+# https://github.com/NicolasBernaerts/tasmota/tree/master/teleinfo
+# Driver code has been let there for study and example purposes but been disabled
+# by commented following 2 lines  
+
+#teleinfo = TELEINFO()
+#tasmota.add_driver(teleinfo)
 

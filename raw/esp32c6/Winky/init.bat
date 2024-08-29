@@ -10,17 +10,23 @@ Module 0
 ; Disable Boot Loop Detection
 SetOption65 1
 
-; Set Telemetry to 11s (to remove 10s deepsleep)
-TelePeriod 11
+; Enable Wifi Scan (avoid wifi lost if router change channel)
+SetOption56 1
+
+; Set Telemetry to 290s (300 special reserved by tasmota)
+TelePeriod 290
+
+; Set Sleeping time
+DeepSleepTime 290
+
+; define OTA Url
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32c6-teleinfo-winky.bin
 
 ; # Set auto timezone
 Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 
 ; # Set Teleinfo in legacy (historique) mode at 1200 baud.
-EnergyConfig Historique	
+; EnergyConfig Historique	
 
-; # Enable sending of all frames in raw mode
-EnergyConfig Full	
-
-; # Send only each 1 on 10 frames received
-EnergyConfig Skip 9
+; # Set Teleinfo in stadard mode at 9600 baud.
+; EnergyConfig Standard
