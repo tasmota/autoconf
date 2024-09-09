@@ -31,12 +31,12 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; Set Teleinfo in stadard mode at 9600 baud.
 ; EnergyConfig Standard
 
-; Set Teleinfo to autodetect mode (standard or historique)
-Energyconfig automode 
-
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
 
 ; 0 for Green LED and 1 for Period Indicator (blue, white or red)
 Energyconfig period=1 
 
+; Set Teleinfo to autodetect mode (standard or historique)
+; this one restart device, use it at the end of file
+Energyconfig automode 
