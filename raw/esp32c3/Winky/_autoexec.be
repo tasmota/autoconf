@@ -12,6 +12,14 @@
 # Set Teleinfo in Standar mode at 9600 baud.
 #tasmota.cmd("EnergyConfig Standard")
 
+# Set Teleinfo to autodetect mode (standard or historique)
+#tasmota.cmd("EnergyConfig automode")
+
+# Set LED brightness to 75%, in sleep mode it will be bright/2
+# 0 for Green LED and 1 for Period Indicator (blue, white or red)
+#tasmota.cmd("EnergyConfig bright=75")
+#tasmota.cmd("EnergyConfig period=1")
+
 # Disable Boot Loop Detection
 #tasmota.cmd("SetOption65 1")
 
