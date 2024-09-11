@@ -28,8 +28,7 @@ Energyconfig bright=75
 Energyconfig period=1 
 
 ; Set Teleinfo to autodetect mode (standard or historique)
-; this one restart device, use it at the end of file
-;Energyconfig automode 
+Energyconfig automode 
 
 ; use template and reboot
 Module 0
