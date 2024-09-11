@@ -1,5 +1,4 @@
 Template {"NAME":"Denky D4 (v1.0)","GPIO":[32,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,640,608,0,0,450,449,448,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
-Module 0
 
 ; All these parameters are saved onto flash device
 ; only once when autoconf is activated or 
@@ -20,3 +19,6 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 
 ; # Set Teleinfo in stadard mode at 9600 baud.
 ; EnergyConfig Standard
+
+; use template and reboot
+Module 0

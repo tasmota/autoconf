@@ -1,6 +1,5 @@
 Br load("Wemos_Teleinfo.autoconf#cp2fs.be")
 Template {"NAME":"Wemos Teleinfo","GPIO":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1376,1,1,640,608,5632,1,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1],"FLAG":0,"BASE":1}
-Module 0
 
 ; All these parameters are saved onto flash device
 ; only once when autoconf is activated or 
@@ -22,4 +21,5 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; # Set Teleinfo in stadard mode at 9600 baud.
 ; EnergyConfig Standard
 
-
+; use template and reboot
+Module 0
