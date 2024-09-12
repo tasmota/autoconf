@@ -1,6 +1,5 @@
 Br load("Winky.autoconf#cp2fs.be")
 Template {"NAME":"Winky C3","GPIO":[1,4704,1376,5632,4705,640,608,1,1,32,1,0,0,0,0,0,0,0,1,1,1,1],"FLAG":0,"BASE":1}
-Module 0
 
 ; All these parameters are saved onto flash device
 ; so once configured, you can change them afterward
@@ -38,5 +37,7 @@ Energyconfig bright=75
 Energyconfig period=1 
 
 ; Set Teleinfo to autodetect mode (standard or historique)
-; this one restart device, use it at the end of file
 Energyconfig automode 
+
+; use template and reboot
+Module 0

@@ -1,6 +1,5 @@
 Br load("DenkyD4_V1.3.autoconf#cp2fs.be")
 Template {"NAME":"Denky D4 (v1.3)","GPIO":[32,0,0,0,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
-Module 0
 
 ; All these parameters are saved onto flash device
 ; only once when autoconf is activated or 
@@ -29,5 +28,7 @@ Energyconfig bright=75
 Energyconfig period=1 
 
 ; Set Teleinfo to autodetect mode (standard or historique)
-; this one restart device, use it at the end of file
 Energyconfig automode 
+
+; use template and reboot
+Module 0
