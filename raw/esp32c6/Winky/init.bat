@@ -1,5 +1,6 @@
 Br load("Winky.autoconf#cp2fs.be")
-Template {"NAME":"Winky","GPIO":[1,4704,1376,4705,5632,4706,640,608,1,32,1,0,0,0,0,0,0,0,1,1,1,1,1,4096,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+Template {"NAME":"Winky","GPIO":[1,4704,1376,4705,5632,4706,640,608,1,32,1,0,0,0,0,0,0,0,1,1,1,1,3840,4096,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+Module 0
 
 ; All these parameters are saved onto flash device
 ; so once configured, you can change them afterward
@@ -30,14 +31,17 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; Set Teleinfo in standard mode at 9600 baud.
 ; EnergyConfig Standard
 
+; Set Teleinfo to autodetect mode (standard or historique)
+Energyconfig automode 
+
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
 
 ; 0 for Green LED and 1 for Period Indicator (blue, white or red)
 Energyconfig period=1 
 
-; Set Teleinfo to autodetect mode (standard or historique)
-Energyconfig automode 
+; Disable analog values display (already done by NicolasBernaerts)
+WebSensor2 0
 
-; use template and reboot
-Module 0
+
+
