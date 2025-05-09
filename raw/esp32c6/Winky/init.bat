@@ -32,7 +32,8 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; EnergyConfig Standard
 
 ; Set Teleinfo to autodetect mode (standard or historique)
-Energyconfig automode 
+; old firmware commnand, deprecated
+; Energyconfig automode 
 
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
@@ -43,5 +44,6 @@ Energyconfig period=1
 ; Disable analog values display (already done by NicolasBernaerts)
 WebSensor2 0
 
-
+; Set Teleinfo to autodetect mode 
+Energyconfig reset 
 
