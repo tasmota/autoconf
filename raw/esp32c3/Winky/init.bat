@@ -37,7 +37,11 @@ Energyconfig bright=75
 Energyconfig period=1 
 
 ; Set Teleinfo to autodetect mode (standard or historique)
-Energyconfig automode 
+; old firmware commnand, deprecated
+; Energyconfig automode 
+
+; Set Teleinfo to autodetect mode 
+Energyconfig reset 
 
 ; use template and reboot
 Module 0
