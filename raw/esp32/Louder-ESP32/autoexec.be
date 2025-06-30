@@ -1,2 +1,2 @@
 # load DAC driver
-load("tas5805m.be")
+load("Louder-ESP32.autoconf#tas5805m.be")
