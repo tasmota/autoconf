@@ -86,7 +86,7 @@ class TAS5805M
     def init()
         self.i2c = tasmota.wire_scan(self.i2c_addr)
         if self.i2c == nil
-            log("TAS5805M: I2C device not found at address 0x{self.i2c_addr:02X}",1)
+            log(f"TAS5805M: I2C device not found at address 0x{self.i2c_addr:02X}",1)
             return false
         end
 
