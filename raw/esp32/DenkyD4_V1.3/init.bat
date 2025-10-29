@@ -1,5 +1,5 @@
 Br load("DenkyD4_V1.3.autoconf#cp2fs.be")
-Template {"NAME":"Denky D4 (v1.3)","GPIO":[32,0,0,0,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+Template {"NAME":"Denky D4 (v1.3a)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
 
 ; All these parameters are saved onto flash device
 ; only once when autoconf is activated or 
@@ -33,6 +33,9 @@ Energyconfig period=1
 
 ; Set Teleinfo to autodetect mode (standard or historique)
 Energyconfig reset
+
+; Set serial minimal log output on uart0 (log to onboard USB/Serial)
+Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 1 
 
 ; use template and reboot
 Module 0
