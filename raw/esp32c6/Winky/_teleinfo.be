@@ -51,7 +51,7 @@ class TELEINFO: Driver
 
   def set_deepsleep(s)
     var cmd = "deepsleeptime " + str(s)
-    print ("set_deepsleep() ", cmd)
+    print("set_deepsleep() ", cmd)
     tasmota.cmd(cmd)
   end
 
@@ -59,7 +59,7 @@ class TELEINFO: Driver
     self.strip.set_pixel_color(1, 0x000000, self.bri)
     self.strip.set_pixel_color(0, 0x000000, self.bri)
     self.strip.show()
-    print ("sleep()")
+    print("sleep()")
     if self.is_usb == false
       # DEBUG 
       print("All Done, going to sleep")
