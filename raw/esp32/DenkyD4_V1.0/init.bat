@@ -23,8 +23,8 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; Set Teleinfo to autodetect mode 
 Energyconfig reset 
 
-; Set serial minimal log output on uart0 (log to onboard USB/Serial)
-Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 1 
+; Set serial log output to info on uart0 (log to onboard USB/Serial)
+Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 2
 
 ; use template and reboot
 Module 0
