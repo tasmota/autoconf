@@ -21,5 +21,8 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; # Set Teleinfo in stadard mode at 9600 baud.
 ; EnergyConfig Standard
 
+; Set serial log output to info
+SerialLog 2
+
 ; use template and reboot
 Module 0

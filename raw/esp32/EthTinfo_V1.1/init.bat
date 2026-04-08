@@ -29,6 +29,9 @@ Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
 ; old firmware commnand, deprecated
 ; Energyconfig automode 
 
+; Set serial log output to info
+SerialLog 2
+
 ; Set Teleinfo to autodetect mode 
 Energyconfig reset 
 
