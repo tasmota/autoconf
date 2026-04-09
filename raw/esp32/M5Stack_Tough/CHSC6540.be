@@ -20,7 +20,6 @@ class CHSC6540 : I2C_Driver
     self.tp_int = gpio.pin(gpio.INTERRUPT, 0)
     super(self).init("CHSC6540", 0x2E)
 
-    tasmota.add_driver(self)
     # check that display is present
     import introspect
     if !introspect.module("display")
