@@ -1,42 +1,50 @@
-Br load("DenkyD4_V1.3a.autoconf#cp2fs.be")
-Template {"NAME":"Denky D4 (v1.3a)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+; Generic Teleinfo
+; ----------------
 
-; All these parameters are saved onto flash device
-; only once when autoconf is activated or 
-; when it's removed and activated again
-; ===================================================
+; copy some samples to FS
+Br load("DenkyD4_V1.3a.autoconf#cp2fs.be")
+
+; Reset settings, but preserve wifi, MQTT and FS
+InitDevice 6
+
+; Disable analog values display
+WebSensor2 0
+
+; Disable energy values display
+WebSensor3 0
 
 ; Disable Boot Loop Detection
 SetOption65 1
 
-; define OTA Url
-OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo-denkyd4.bin
+; Enable Wifi Scan (avoid wifi lost if router change channel)
+SetOption56 1
+
+; Set WebRefresh to 1 second
+WebRefresh 1000
 
 ; Set auto timezone
-Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
+Backlog Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120;
 
-; Set Teleinfo in legacy (historique) mode at 1200 baud.
-; EnergyConfig Historique	
+; Set blinking LED color : 0 for Green LED and 1 for Period Indicator (blue, white or red)
+; Set Teleinfo to autodetect mode 
+Energyconfig period=1 reset
 
-; Set Teleinfo in standard mode at 9600 baud.
-; EnergyConfig Standard
+; Denky D4
+; --------
+
+; Set module configuration
+Template {"NAME":"Denky D4 (v1.3a)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
 
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
 
-; 0 for Green LED and 1 for Period Indicator (blue, white or red)
-Energyconfig period=1 
-
-; Set Teleinfo to autodetect mode (standard or historique)
-; old firmware commnand, deprecated
-; Energyconfig automode 
-
-; Set Teleinfo to autodetect mode (standard or historique)
-Energyconfig reset 
+; OTA Url
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo-denkyd4.bin
 
 ; Set serial log output to info on uart0 (log to onboard USB/Serial)
-Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 2
+Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 2;
 
-; use template and reboot
+; Set default module
 Module 0
+
 
