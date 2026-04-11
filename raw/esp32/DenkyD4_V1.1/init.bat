@@ -1,9 +1,6 @@
 ; Generic Teleinfo
 ; ----------------
 
-; copy some samples to FS
-Br load("DenkyD4_V1.3a.autoconf#cp2fs.be")
-
 ; Reset settings, but preserve wifi, MQTT and FS
 InitDevice 6
 
@@ -32,8 +29,11 @@ Energyconfig period=1 reset
 ; Denky D4
 ; --------
 
+; copy some samples to FS
+Br load("DenkyD4_V1.1.autoconf#cp2fs.be")
+
 ; Set module configuration
-Template {"NAME":"Denky D4 (v1.3a)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+Template {"NAME":"Denky D4 (v1.1)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,1376,1,0,0,0,0,0,640,608,0,0,0,0,0,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
 
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
