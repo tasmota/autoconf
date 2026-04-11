@@ -1,30 +1,50 @@
-Template {"NAME":"Denky D4 (v1.0)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,0,1,0,0,0,0,0,640,608,0,0,450,449,448,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+; Generic Teleinfo
+; ----------------
 
-; All these parameters are saved onto flash device
-; only once when autoconf is activated or 
-; when it's removed and activated again
-; ===================================================
+; Reset settings, but preserve wifi, MQTT and FS
+InitDevice 6
+
+; Disable analog values display
+WebSensor2 0
+
+; Disable energy values display
+WebSensor3 0
 
 ; Disable Boot Loop Detection
 SetOption65 1
 
-; define OTA Url
+; Enable Wifi Scan (avoid wifi lost if router change channel)
+SetOption56 1
+
+; Set WebRefresh to 1 second
+WebRefresh 1000
+
+; Set auto timezone
+Backlog Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120;
+
+; Set blinking LED color : 0 for Green LED and 1 for Period Indicator (blue, white or red)
+; Set Teleinfo to autodetect mode 
+Energyconfig period=1 reset
+
+; Denky D4
+; --------
+
+; copy some samples to FS
+Br load("DenkyD4_V1.0.autoconf#cp2fs.be")
+
+; Set module configuration
+Template {"NAME":"Denky D4 (v1.0)","GPIO":[32,3200,0,3232,1,0,0,0,0,1,0,1,0,0,0,0,0,640,608,0,0,450,449,448,0,0,5632,0,0,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+
+; Set LED brightness to 75%, in sleep mode it will be bright/2
+Energyconfig bright=75
+
+; OTA Url
 OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo-denkyd4.bin
 
-; # Set auto timezone
-Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
-
-; # Set Teleinfo in legacy (historique) mode at 1200 baud.
-; EnergyConfig Historique	
-
-; # Set Teleinfo in stadard mode at 9600 baud.
-; EnergyConfig Standard
-
-; Set Teleinfo to autodetect mode 
-Energyconfig reset 
-
 ; Set serial log output to info on uart0 (log to onboard USB/Serial)
-Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 2
+Backlog SerialConfig 8N1; Baudrate 115200; SerialLog 2;
 
-; use template and reboot
+; Set default module
 Module 0
+
+
