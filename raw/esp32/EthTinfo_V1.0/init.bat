@@ -38,7 +38,7 @@ Backlog Ethernet 1; EthType 0; EthAddress 0; EthClockMode 3;
 Energyconfig bright=75
 
 ; OTA Url
-OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo-ethernet.bin
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32-teleinfo.bin
 
 ; Set serial log output to info
 SerialLog 2;
