@@ -1,11 +1,14 @@
-Br load("Winky.autoconf#cp2fs.be")
-Template {"NAME":"Winky","GPIO":[1,4704,1376,4705,5632,4706,640,608,1,32,1,0,0,0,0,0,0,0,1,1,1,1,3840,4096,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
-Module 0
+; Generic Teleinfo
+; ----------------
 
-; All these parameters are saved onto flash device
-; so once configured, you can change them afterward
-; in the file autoexec.be copied onto the filesystem
-; =====================================================
+; Reset settings, but preserve wifi, MQTT and FS
+InitDevice 6
+
+; Disable analog values display
+WebSensor2 0
+
+; Disable energy values display
+WebSensor3 0
 
 ; Disable Boot Loop Detection
 SetOption65 1
@@ -16,34 +19,38 @@ SetOption56 1
 ; Set Telemetry to 290s (300 special reserved by tasmota)
 TelePeriod 290
 
-; Set Sleeping time
-DeepSleepTime 290
-
-; define OTA Url
-OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32c6-teleinfo-winky.bin
+; Set WebRefresh to 1 second
+WebRefresh 1000
 
 ; Set auto timezone
-Backlog0 Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120
+Backlog Timezone 99; TimeStd 0,0,10,1,3,60; TimeDst 0,0,3,1,2,120;
 
-; Set Teleinfo in legacy (historique) mode at 1200 baud.
-; EnergyConfig Historique	
+; Set blinking LED color : 0 for Green LED and 1 for Period Indicator (blue, white or red)
+; Set Teleinfo to autodetect mode 
+Energyconfig period=1 reset
 
-; Set Teleinfo in standard mode at 9600 baud.
-; EnergyConfig Standard
+; Winky C6
+; --------
 
-; Set Teleinfo to autodetect mode (standard or historique)
-; old firmware commnand, deprecated
-; Energyconfig automode 
+; copy some samples to FS
+Br load("Winky.autoconf#cp2fs.be")
+
+; Set module configuration
+Template {"NAME":"Winky","GPIO":[1,4704,1376,4705,5632,4706,640,608,1,32,1,0,0,0,0,0,0,0,1,1,1,1,3840,4096,0,0,0,0,0,0,0],"FLAG":0,"BASE":1}
+
+; OTA Url
+OtaUrl https://github.com/NicolasBernaerts/tasmota/raw/master/teleinfo/binary/tasmota32c6-teleinfo-winky.bin
 
 ; Set LED brightness to 75%, in sleep mode it will be bright/2
 Energyconfig bright=75
 
-; 0 for Green LED and 1 for Period Indicator (blue, white or red)
-Energyconfig period=1 
+; Set DeepSleep time based on tension
+winky_sleep 0
 
-; Disable analog values display (already done by NicolasBernaerts)
-WebSensor2 0
+; Set Sleep to 100ms to unload CPU
+Sleep 100
 
-; Set Teleinfo to autodetect mode 
-Energyconfig reset 
+; Set default module
+Module 0
+
 
