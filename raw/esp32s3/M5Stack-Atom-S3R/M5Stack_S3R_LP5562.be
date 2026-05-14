@@ -7,7 +7,6 @@
 # This code is ported from https://github.com/m5stack/M5GFX/blob/master/src/M5GFX.cpp
 # `struct Light_M5StackAtomS3R : public lgfx::ILight`
 class M5Stack_S3R_LP5562 : I2C_Driver
-
   def init(addr)
     if (addr == nil)  addr = 0x30   end   # default address is 0x30
     super(self, I2C_Driver).init("LP5562", 0x30)
