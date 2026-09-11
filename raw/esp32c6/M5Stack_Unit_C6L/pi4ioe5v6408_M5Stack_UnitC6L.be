@@ -4,7 +4,11 @@
 # in preinit.be: import pi4ioe5v6408_M5Stack_UnitC6L
 #################################################################################
 
+import gpio
+
 class PI4IOE5V6408_UnitC6L : I2C_Driver
+  var virtual_buttons
+
   def init(addr)
     if (addr == nil) 
       addr = 0x43
@@ -20,6 +24,8 @@ class PI4IOE5V6408_UnitC6L : I2C_Driver
 
         return                      # wrong device
       end
+
+      self.virtual_buttons = [-1, -1]
 
       # M5Unified src/utility/Power_Class.cpp reg_data_array_for_lorac6
       #  PI4IO E0
@@ -45,8 +51,42 @@ class PI4IOE5V6408_UnitC6L : I2C_Driver
       self.write_bit(0x05, 6, 1)    # enable SX_ANT_SW
       self.write_bit(0x05, 5, 1)    # enable SX_LNA_EN
 
+      # Get virtual button index or -1
+      self.virtual_buttons[0] = gpio.add_virtual_button(0)
+
       tasmota.add_driver(self)      # register this driver
     end
+  end
+
+  def deinit()
+    # Free virtual buttons if any
+    for i: 0..1
+      if self.virtual_buttons[i] >= 0
+        gpio.remove_virtual_button(self.virtual_buttons[i])
+      end
+    end
+    tasmota.remove_driver(self)
+  end
+
+  # Get 1 if button is pressed, 0 if not
+  def get_button(num)
+    var mask = 0x01 << num
+    return (self.wire.read(self.addr, 0x0F, 1) & mask) ? 0 : 1
+  end
+
+  # update buttons
+  def update_all()
+    for i: 0..1
+      # M5UnitC6L and NessoN1
+      if self.virtual_buttons[i] >= 0
+        gpio.set_virtual_button_state(self.virtual_buttons[i], self.get_button(i))
+      end
+    end
+  end
+
+  # update every 50ms
+  def every_50ms()
+    self.update_all()
   end
 end
 
