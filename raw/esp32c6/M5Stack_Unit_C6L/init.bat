@@ -5,4 +5,3 @@ DisplayDimmer 40
 DisplayCols1 10
 DisplayCols2 4
 DisplayRows 6
-DisplayMode 1
